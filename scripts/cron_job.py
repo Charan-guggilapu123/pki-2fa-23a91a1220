@@ -46,5 +46,5 @@ def main():
         traceback.print_exc(file=sys.stderr)
         sys.exit(2)
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     main()
