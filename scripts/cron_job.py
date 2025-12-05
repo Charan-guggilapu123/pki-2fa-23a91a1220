@@ -10,6 +10,11 @@ import os
 from datetime import datetime
 import traceback
 
+# Ensure we can import third-party packages installed in /srv/app/vendor
+VENDOR_PATH = "/srv/app/vendor"
+if VENDOR_PATH not in sys.path:
+    sys.path.insert(0, VENDOR_PATH)
+
 try:
     import pyotp
     import binascii
@@ -29,7 +34,7 @@ def read_seed():
         b = binascii.unhexlify(s)
     except Exception as e:
         raise ValueError("invalid hex seed: {}".format(e))
-    # base32 (no padding) as used by TOTP libs
+    # base32 (no padding)
     import base64
     b32 = base64.b32encode(b).decode('utf-8').strip('=')
     return b32
@@ -46,5 +51,4 @@ def main():
         traceback.print_exc(file=sys.stderr)
         sys.exit(2)
 
-if _name_ == "_main_":
-    main()
+if __name__ == "__main__":
